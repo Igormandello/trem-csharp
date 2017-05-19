@@ -17,7 +17,7 @@ critério de vantagem pode ser menor tempo gasto, menor distância percorrida ou
 valor total a ser pago.
 
 #
-![Mapa Espanha-Portugal](/Rescursos/mapaEspanhaPortugal.jpg)
+![Mapa Espanha-Portugal](https://github.com/Igormandello/trem-csharp/blob/master/Recursos/mapaEspanhaPortugal.jpg?raw=true)
 
 Para realizar as operações, deve-se criar uma matriz de adjacências, representando o grafo
 (como o apresentado no mapa acima) com as cidades e seus dados de ligações. Em seguida,
