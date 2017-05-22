@@ -32,9 +32,14 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.cidadesMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.incluirCidadeMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.posYMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mostrarPontoMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.incluirCidadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.excluirCidadeMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.cbxCidades = new System.Windows.Forms.ToolStripComboBox();
             this.btnExcluirCidade = new System.Windows.Forms.ToolStripMenuItem();
+            this.salvarCidadesMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.carregarCidadesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.carregarCidadesMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.dlgOpen = new System.Windows.Forms.OpenFileDialog();
@@ -49,6 +54,8 @@
             this.btnSalvarCaminhos = new System.Windows.Forms.Button();
             this.btnCarregarCaminhos = new System.Windows.Forms.Button();
             this.pnlCaminhos = new System.Windows.Forms.Panel();
+            this.dlgSave = new System.Windows.Forms.SaveFileDialog();
+            this.posXMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mapa)).BeginInit();
             this.pnlCaminhos.SuspendLayout();
@@ -70,6 +77,7 @@
             this.cidadesMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.incluirCidadeMenu,
             this.excluirCidadeMenu,
+            this.salvarCidadesMenu,
             this.carregarCidadesToolStripMenuItem});
             this.cidadesMenu.Name = "cidadesMenu";
             this.cidadesMenu.Size = new System.Drawing.Size(61, 20);
@@ -78,10 +86,41 @@
             // 
             // incluirCidadeMenu
             // 
+            this.incluirCidadeMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.posXMenu,
+            this.posYMenu,
+            this.toolStripSeparator1,
+            this.mostrarPontoMenu,
+            this.incluirCidadeToolStripMenuItem});
             this.incluirCidadeMenu.Name = "incluirCidadeMenu";
             this.incluirCidadeMenu.Size = new System.Drawing.Size(164, 22);
             this.incluirCidadeMenu.Text = "Incluir";
             this.incluirCidadeMenu.Click += new System.EventHandler(this.incluirCidade);
+            // 
+            // posYMenu
+            // 
+            this.posYMenu.Name = "posYMenu";
+            this.posYMenu.Size = new System.Drawing.Size(181, 22);
+            this.posYMenu.Text = "Posição Y: 0.000";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
+            // 
+            // mostrarPontoMenu
+            // 
+            this.mostrarPontoMenu.Name = "mostrarPontoMenu";
+            this.mostrarPontoMenu.Size = new System.Drawing.Size(181, 22);
+            this.mostrarPontoMenu.Text = "Mostrar Ponto Atual";
+            this.mostrarPontoMenu.Click += new System.EventHandler(this.alternarPonto);
+            // 
+            // incluirCidadeToolStripMenuItem
+            // 
+            this.incluirCidadeToolStripMenuItem.Name = "incluirCidadeToolStripMenuItem";
+            this.incluirCidadeToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.incluirCidadeToolStripMenuItem.Text = "Incluir Cidade";
+            this.incluirCidadeToolStripMenuItem.Click += new System.EventHandler(this.incluirCidade);
             // 
             // excluirCidadeMenu
             // 
@@ -107,6 +146,13 @@
             this.btnExcluirCidade.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
             this.btnExcluirCidade.Click += new System.EventHandler(this.excluirCidade);
             // 
+            // salvarCidadesMenu
+            // 
+            this.salvarCidadesMenu.Name = "salvarCidadesMenu";
+            this.salvarCidadesMenu.Size = new System.Drawing.Size(164, 22);
+            this.salvarCidadesMenu.Text = "Salvar Cidades";
+            this.salvarCidadesMenu.Click += new System.EventHandler(this.salvarCidades);
+            // 
             // carregarCidadesToolStripMenuItem
             // 
             this.carregarCidadesToolStripMenuItem.Name = "carregarCidadesToolStripMenuItem";
@@ -131,6 +177,7 @@
             this.mapa.TabIndex = 1;
             this.mapa.TabStop = false;
             this.mapa.Paint += new System.Windows.Forms.PaintEventHandler(this.mapa_Paint);
+            this.mapa.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mapa_MouseClick);
             // 
             // cbxCidade1
             // 
@@ -206,6 +253,7 @@
             this.btnSalvarCaminhos.TabIndex = 9;
             this.btnSalvarCaminhos.Text = "Salvar Caminhos";
             this.btnSalvarCaminhos.UseVisualStyleBackColor = true;
+            this.btnSalvarCaminhos.Click += new System.EventHandler(this.salvarCaminhos);
             // 
             // btnCarregarCaminhos
             // 
@@ -234,6 +282,12 @@
             this.pnlCaminhos.TabIndex = 11;
             this.pnlCaminhos.Visible = false;
             // 
+            // posXMenu
+            // 
+            this.posXMenu.Name = "posXMenu";
+            this.posXMenu.Size = new System.Drawing.Size(181, 22);
+            this.posXMenu.Text = "Posição X: 0.000";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -245,7 +299,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Trens Espanha/Portugal";
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -279,6 +333,13 @@
         private System.Windows.Forms.Button btnSalvarCaminhos;
         private System.Windows.Forms.Button btnCarregarCaminhos;
         private System.Windows.Forms.Panel pnlCaminhos;
+        private System.Windows.Forms.SaveFileDialog dlgSave;
+        private System.Windows.Forms.ToolStripMenuItem salvarCidadesMenu;
+        private System.Windows.Forms.ToolStripMenuItem posYMenu;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem mostrarPontoMenu;
+        private System.Windows.Forms.ToolStripMenuItem incluirCidadeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem posXMenu;
     }
 }
 
