@@ -184,8 +184,6 @@ namespace Trens
 
                     grafo = new GrafoCaminhos(caminhos, cidades.Keys.ToList());
 
-                    grafo.AcharCaminho("Lorca", "Murcia", ParametrosDeBusca.Distancia);
-
                     mapa.Invalidate();
                 }
                 catch (Exception ex)
@@ -313,12 +311,17 @@ namespace Trens
             Pen p = new Pen(Color.Black, TAMANHO_CIRCULO.Width / 2);
             foreach (Caminho caminho in caminhos)
             {
-                if (caminho.VelocidadeMedia >= 200)
+                if (caminho.VelocidadeMedia > 200)
                     p.Color = Color.MediumPurple;
                 else
                     p.Color = Color.DeepSkyBlue;
 
-                e.Graphics.DrawLine(p, cidades[caminho.Cidades[0]], cidades[caminho.Cidades[1]]);
+                PointF cidade1 = cidades[caminho.Cidades[0]], 
+                       cidade2 = cidades[caminho.Cidades[1]];
+
+                e.Graphics.DrawLine(p, 
+                                    new Point((int)(cidade1.X * mapa.Width),(int)(cidade1.Y * mapa.Height)),
+                                    new Point((int)(cidade2.X * mapa.Width), (int)(cidade2.Y * mapa.Height)));
             }
 
             foreach (PointF cidade in cidades.Values)
@@ -360,5 +363,10 @@ namespace Trens
             mapa.Invalidate();
         }
         #endregion
+
+        private void buscarCaminho(object sender, EventArgs e)
+        {
+            lbCaminho.Items.AddRange(grafo.AcharCaminho("Madrid", "Viseu", ParametrosDeBusca.Distancia).ToArray());
+        }
     }
 }

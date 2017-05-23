@@ -38,7 +38,6 @@ namespace Trens
         public Stack<String> AcharCaminho(String cidadeInicio, String cidadeDestino, ParametrosDeBusca param)
         {
             Stack<String> percurso = MelhorCaminho(cidadeInicio, cidadeDestino);
-            percurso.Push(cidadeInicio);
 
             return percurso;
         }
@@ -55,22 +54,45 @@ namespace Trens
                     if (cidadeDestino == s)
                     {
                         Stack<String> cidade = new Stack<String>();
-                        cidade.Push(s);
+                        cidade.Push(cidadeInicio);
 
                         return cidade;
                     }
                         
                     Stack<String> caminho = MelhorCaminho(s, cidadeDestino);
-                    if (caminho.Count != 0)
+                    if (caminho != null)
+                    {
+                        caminho.Push(cidadeInicio);
                         distanciasFilhos.Add(caminho);
+                    }
                 }
 
-            Stack<String> menor = new Stack<String>();
-            foreach (Stack<String> percursos in distanciasFilhos)
-                if (percursos.Count < menor.Count)
-                    menor = percursos;
+            if (distanciasFilhos.Count == 0)
+                return null;
+
+            Stack<String> menor = distanciasFilhos[0];
+            int tamanhoMenor    = tamanhoPercurso(menor, cidadeDestino);
+
+            foreach (Stack<String> percurso in distanciasFilhos)
+            {
+                int tamanhoPercurso = this.tamanhoPercurso(percurso, cidadeDestino);
+
+                if (percurso.Count == 0 || tamanhoPercurso < tamanhoMenor)
+                    menor = percurso;
+            }
 
             return menor;
+        }
+
+        private int tamanhoPercurso(Stack<String> percurso, String fim)
+        {
+            Stack<String> percursoClone = new Stack<String>(percurso);
+
+            int tamanho = 0;
+            while (percursoClone.Count != 0)
+                tamanho += this[percursoClone.Pop(), (percursoClone.Count != 0 ? percursoClone.Peek() : fim)];
+
+            return tamanho;
         }
     }
 }

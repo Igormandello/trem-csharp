@@ -51,13 +51,13 @@ Santiago de C. A Coruna         64   67
 Santiago de C. Ourense          82  136
 A Coruna       Lugo             80   47
 Lugo           Ponferrada       93   71
-Cordoba        Jaen              0    0
-Cordoba        Malaga            0    0
-Malaga         Granada           0    0
-Jaen           Granada           0    0
-Granada        El Ejido          0    0
-Madrid         Guadalajara       0    0
-Guadalajara    Zaragoza          0    0
-Barcelona      Mataro            0    0
-Mataro         Girona            0    0
-Girona         Perpignan         0    0
+Cordoba        Jaen              1    0
+Cordoba        Malaga            1    0
+Malaga         Granada           1    0
+Jaen           Granada           1    0
+Granada        El Ejido          1    0
+Madrid         Guadalajara       1    0
+Guadalajara    Zaragoza          1    0
+Barcelona      Mataro            1    0
+Mataro         Girona            1    0
+Girona         Perpignan         1    0
