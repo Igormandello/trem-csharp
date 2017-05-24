@@ -55,14 +55,14 @@
             this.btnSalvarCaminhos = new System.Windows.Forms.Button();
             this.btnCarregarCaminhos = new System.Windows.Forms.Button();
             this.pnlCaminhos = new System.Windows.Forms.Panel();
-            this.btnBuscar = new System.Windows.Forms.Button();
-            this.dlgSave = new System.Windows.Forms.SaveFileDialog();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.lbCaminho = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rbDist = new System.Windows.Forms.RadioButton();
-            this.rbTempo = new System.Windows.Forms.RadioButton();
             this.rbCusto = new System.Windows.Forms.RadioButton();
-            this.btnCancelar = new System.Windows.Forms.Button();
+            this.rbTempo = new System.Windows.Forms.RadioButton();
+            this.rbDist = new System.Windows.Forms.RadioButton();
+            this.btnBuscar = new System.Windows.Forms.Button();
+            this.dlgSave = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mapa)).BeginInit();
             this.pnlCaminhos.SuspendLayout();
@@ -281,6 +281,7 @@
             // 
             // pnlCaminhos
             // 
+            this.pnlCaminhos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlCaminhos.Controls.Add(this.btnCancelar);
             this.pnlCaminhos.Controls.Add(this.lbCaminho);
             this.pnlCaminhos.Controls.Add(this.groupBox1);
@@ -300,15 +301,15 @@
             this.pnlCaminhos.TabIndex = 11;
             this.pnlCaminhos.Visible = false;
             // 
-            // btnBuscar
+            // btnCancelar
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(12, 213);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(253, 33);
-            this.btnBuscar.TabIndex = 11;
-            this.btnBuscar.Text = "Buscar Caminho";
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.buscarCaminho);
+            this.btnCancelar.Location = new System.Drawing.Point(12, 371);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(120, 82);
+            this.btnCancelar.TabIndex = 13;
+            this.btnCancelar.Text = "Cancelar Busca";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // lbCaminho
             // 
@@ -331,6 +332,26 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Parâmetro de Busca";
             // 
+            // rbCusto
+            // 
+            this.rbCusto.AutoSize = true;
+            this.rbCusto.Location = new System.Drawing.Point(6, 65);
+            this.rbCusto.Name = "rbCusto";
+            this.rbCusto.Size = new System.Drawing.Size(52, 17);
+            this.rbCusto.TabIndex = 2;
+            this.rbCusto.Text = "Custo";
+            this.rbCusto.UseVisualStyleBackColor = true;
+            // 
+            // rbTempo
+            // 
+            this.rbTempo.AutoSize = true;
+            this.rbTempo.Location = new System.Drawing.Point(6, 42);
+            this.rbTempo.Name = "rbTempo";
+            this.rbTempo.Size = new System.Drawing.Size(58, 17);
+            this.rbTempo.TabIndex = 1;
+            this.rbTempo.Text = "Tempo";
+            this.rbTempo.UseVisualStyleBackColor = true;
+            // 
             // rbDist
             // 
             this.rbDist.AutoSize = true;
@@ -343,34 +364,15 @@
             this.rbDist.Text = "Distância";
             this.rbDist.UseVisualStyleBackColor = true;
             // 
-            // rbTempo
+            // btnBuscar
             // 
-            this.rbTempo.AutoSize = true;
-            this.rbTempo.Location = new System.Drawing.Point(6, 42);
-            this.rbTempo.Name = "rbTempo";
-            this.rbTempo.Size = new System.Drawing.Size(58, 17);
-            this.rbTempo.TabIndex = 1;
-            this.rbTempo.Text = "Tempo";
-            this.rbTempo.UseVisualStyleBackColor = true;
-            // 
-            // rbCusto
-            // 
-            this.rbCusto.AutoSize = true;
-            this.rbCusto.Location = new System.Drawing.Point(6, 65);
-            this.rbCusto.Name = "rbCusto";
-            this.rbCusto.Size = new System.Drawing.Size(52, 17);
-            this.rbCusto.TabIndex = 2;
-            this.rbCusto.Text = "Custo";
-            this.rbCusto.UseVisualStyleBackColor = true;
-            // 
-            // btnCancelar
-            // 
-            this.btnCancelar.Location = new System.Drawing.Point(12, 371);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(120, 82);
-            this.btnCancelar.TabIndex = 13;
-            this.btnCancelar.Text = "Cancelar Busca";
-            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Location = new System.Drawing.Point(12, 213);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(253, 33);
+            this.btnBuscar.TabIndex = 11;
+            this.btnBuscar.Text = "Buscar Caminho";
+            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.buscarCaminho);
             // 
             // Form1
             // 

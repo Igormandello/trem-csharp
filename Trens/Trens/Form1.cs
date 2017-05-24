@@ -21,15 +21,19 @@ namespace Trens
         private PointF localCidade  = PointF.Empty,
                        maximizeCity = PointF.Empty;
 
-        public readonly static Size TAMANHO_CIRCULO = new Size(10, 10);
-        public readonly static Size OFFSET_CIRCULO  = new Size(TAMANHO_CIRCULO.Width / 2, TAMANHO_CIRCULO.Height / 2);
+        private Stack<String> caminhoBusca = null;
+
+        private Size tamanhoCirculo, offsetCirculo;
 
         public Form1()
         {
             InitializeComponent();
 
             this.Size = new Size(646, 563);
-        }
+
+            tamanhoCirculo = new Size(mapa.Width / 61, mapa.Height / 49);
+            offsetCirculo = new Size(tamanhoCirculo.Width / 2, tamanhoCirculo.Height / 2);
+    }
 
         #region Métodos de cidades
         private void carregarCidades(object sender, EventArgs e)
@@ -61,6 +65,14 @@ namespace Trens
                     }
 
                     grafo = new GrafoCaminhos(caminhos, cidades.Keys.ToList());
+
+                    cidadesMenu.Visible = true;
+                    pnlCaminhos.Visible = true;
+                    this.Size = new Size(929, 563);
+                    carregarCidadesMenu.Visible = false;
+
+                    mapa.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+
                     mapa.Invalidate();
                 }
                 catch (Exception ex)
@@ -72,11 +84,6 @@ namespace Trens
                 }
 
                 sr.Close();
-
-                cidadesMenu.Visible = true;
-                pnlCaminhos.Visible = true;
-                this.Size = new Size(929, 563);
-                carregarCidadesMenu.Visible = false;
             }
         }
 
@@ -304,45 +311,62 @@ namespace Trens
         #region Métodos graficos
         private void Form1_Resize(object sender, EventArgs e)
         {
+            tamanhoCirculo = new Size(mapa.Width / 61, mapa.Height / 49);
+            offsetCirculo = new Size(tamanhoCirculo.Width / 2, tamanhoCirculo.Height / 2);
+
             mapa.Invalidate();
         }
 
         private void mapa_Paint(object sender, PaintEventArgs e)
         {
-            Pen p = new Pen(Color.Black, TAMANHO_CIRCULO.Width / 2);
-            foreach (Caminho caminho in caminhos)
+            Pen p = new Pen(Color.DeepSkyBlue, (tamanhoCirculo.Width < tamanhoCirculo.Height ? tamanhoCirculo.Width / 1.5f : tamanhoCirculo.Height / 1.5f));
+
+            //Desenha os caminhos, ou um percurso, caso o usuário tenha feito uma busca
+            if (caminhoBusca == null)
+                foreach (Caminho caminho in caminhos)
+                {
+                    PointF cidade1 = cidades[caminho.Cidades[0]], 
+                           cidade2 = cidades[caminho.Cidades[1]];
+
+                    e.Graphics.DrawLine(p, 
+                                        new Point((int)(cidade1.X * mapa.Width),(int)(cidade1.Y * mapa.Height)),
+                                        new Point((int)(cidade2.X * mapa.Width), (int)(cidade2.Y * mapa.Height)));
+                }
+            else
             {
-                if (caminho.VelocidadeMedia > 200)
-                    p.Color = Color.MediumPurple;
-                else
-                    p.Color = Color.DeepSkyBlue;
+                Stack<String> caminhoClone = new Stack<String>(caminhoBusca);
+                while (caminhoClone.Count != 1)
+                {
+                    PointF cidade1 = cidades[caminhoClone.Pop()],
+                           cidade2 = cidades[caminhoClone.Peek()];
 
-                PointF cidade1 = cidades[caminho.Cidades[0]], 
-                       cidade2 = cidades[caminho.Cidades[1]];
-
-                e.Graphics.DrawLine(p, 
-                                    new Point((int)(cidade1.X * mapa.Width),(int)(cidade1.Y * mapa.Height)),
-                                    new Point((int)(cidade2.X * mapa.Width), (int)(cidade2.Y * mapa.Height)));
+                    e.Graphics.DrawLine(p,
+                                        new Point((int)(cidade1.X * mapa.Width), (int)(cidade1.Y * mapa.Height)),
+                                        new Point((int)(cidade2.X * mapa.Width), (int)(cidade2.Y * mapa.Height)));
+                }
             }
 
+            //Desenha as cidades no mapa
             foreach (PointF cidade in cidades.Values)
             {
                 Point local = new Point((int)(cidade.X * mapa.Width), (int)(cidade.Y * mapa.Height));
-                e.Graphics.FillEllipse(Brushes.Red, new Rectangle(Point.Subtract(local, OFFSET_CIRCULO), TAMANHO_CIRCULO));
+                e.Graphics.FillEllipse(Brushes.Red, new Rectangle(Point.Subtract(local, offsetCirculo), tamanhoCirculo));
             }
 
+            //Mostra a posição atual da cidade a ser inserida
             if (showMousePos)
             {
-                Point local = Point.Subtract(new Point((int)(localCidade.X * mapa.Width), (int)(localCidade.Y * mapa.Height)), new Size(OFFSET_CIRCULO.Width + 2, OFFSET_CIRCULO.Height + 2));
-                e.Graphics.FillEllipse(Brushes.Black, new Rectangle(local, new Size(TAMANHO_CIRCULO.Width + 4, TAMANHO_CIRCULO.Height + 4)));
+                Point local = Point.Subtract(new Point((int)(localCidade.X * mapa.Width), (int)(localCidade.Y * mapa.Height)), new Size(offsetCirculo.Width + 2, offsetCirculo.Height + 2));
+                e.Graphics.FillEllipse(Brushes.Black, new Rectangle(local, new Size(tamanhoCirculo.Width + 4, tamanhoCirculo.Height + 4)));
             }
 
+            //Desenha a cidade selecionada pelo usuário no caminho
             if (maximizeCity != PointF.Empty)
             {
                 Point local = new Point((int)(maximizeCity.X * mapa.Width), (int)(maximizeCity.Y * mapa.Height));
                 e.Graphics.FillEllipse(Brushes.DarkRed, new Rectangle(
-                                                        Point.Subtract(local, new Size(OFFSET_CIRCULO.Width + 2, OFFSET_CIRCULO.Height + 2)), 
-                                                        new Size(TAMANHO_CIRCULO.Width + 4, TAMANHO_CIRCULO.Height +  4)));
+                                                        Point.Subtract(local, new Size(offsetCirculo.Width + 2, offsetCirculo.Height + 2)), 
+                                                        new Size(tamanhoCirculo.Width + 4, tamanhoCirculo.Height +  4)));
             }
         }
 
@@ -393,7 +417,26 @@ namespace Trens
                 p = ParametrosDeBusca.Preco;
 
             lbCaminho.Items.Clear();
-            lbCaminho.Items.AddRange(grafo.AcharCaminho(cidade1, cidade2, p).ToArray());
+            Stack<String> caminhoInvertido = grafo.AcharCaminho(cidade1, cidade2, p);
+            if (caminhoInvertido == null)
+            {
+                MessageBox.Show("Caminho não existente");
+                return;
+            }
+
+            caminhoBusca = caminhoInvertido;
+            lbCaminho.Items.AddRange(caminhoInvertido.Reverse().ToArray());
+
+            mapa.Invalidate();
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            caminhoBusca = null;
+            maximizeCity = PointF.Empty;
+            lbCaminho.Items.Clear();
+
+            mapa.Invalidate();
         }
 
         private void lbCaminho_SelectedIndexChanged(object sender, EventArgs e)
