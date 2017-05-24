@@ -17,8 +17,9 @@ namespace Trens
         private List<Caminho>             caminhos = new List<Caminho>();
         private GrafoCaminhos grafo;
 
-        private bool showMousePos  = false;
-        private PointF localCidade = PointF.Empty;
+        private bool showMousePos   = false;
+        private PointF localCidade  = PointF.Empty,
+                       maximizeCity = PointF.Empty;
 
         public readonly static Size TAMANHO_CIRCULO = new Size(10, 10);
         public readonly static Size OFFSET_CIRCULO  = new Size(TAMANHO_CIRCULO.Width / 2, TAMANHO_CIRCULO.Height / 2);
@@ -230,8 +231,8 @@ namespace Trens
 
         private void inserirCaminho(object sender, EventArgs e)
         {
-            string cidade1 = cbxCidade1.SelectedItem?.ToString(),
-                    cidade2 = cbxCidade2.SelectedItem?.ToString();
+            string cidade1 = (cbxCidade1.SelectedItem == null ? null : cbxCidade1.SelectedItem.ToString()),
+                   cidade2 = (cbxCidade2.SelectedItem == null ? null : cbxCidade2.SelectedItem.ToString());
 
             if (cidade1 == null || cidade2 == null)
             {
@@ -272,8 +273,8 @@ namespace Trens
 
         private void excluirCaminho(object sender, EventArgs e)
         {
-            string cidade1 = cbxCidade1.SelectedItem?.ToString(),
-                   cidade2 = cbxCidade2.SelectedItem?.ToString();
+            string cidade1 = (cbxCidade1.SelectedItem == null ? null : cbxCidade1.SelectedItem.ToString()),
+                   cidade2 = (cbxCidade2.SelectedItem == null ? null : cbxCidade2.SelectedItem.ToString());
 
             if (cidade1 == null || cidade2 == null)
             {
@@ -335,6 +336,14 @@ namespace Trens
                 Point local = Point.Subtract(new Point((int)(localCidade.X * mapa.Width), (int)(localCidade.Y * mapa.Height)), new Size(OFFSET_CIRCULO.Width + 2, OFFSET_CIRCULO.Height + 2));
                 e.Graphics.FillEllipse(Brushes.Black, new Rectangle(local, new Size(TAMANHO_CIRCULO.Width + 4, TAMANHO_CIRCULO.Height + 4)));
             }
+
+            if (maximizeCity != PointF.Empty)
+            {
+                Point local = new Point((int)(maximizeCity.X * mapa.Width), (int)(maximizeCity.Y * mapa.Height));
+                e.Graphics.FillEllipse(Brushes.DarkRed, new Rectangle(
+                                                        Point.Subtract(local, new Size(OFFSET_CIRCULO.Width + 2, OFFSET_CIRCULO.Height + 2)), 
+                                                        new Size(TAMANHO_CIRCULO.Width + 4, TAMANHO_CIRCULO.Height +  4)));
+            }
         }
 
         private void mapa_MouseClick(object sender, MouseEventArgs e)
@@ -366,7 +375,31 @@ namespace Trens
 
         private void buscarCaminho(object sender, EventArgs e)
         {
-            lbCaminho.Items.AddRange(grafo.AcharCaminho("Madrid", "Viseu", ParametrosDeBusca.Distancia).ToArray());
+            string cidade1 = (cbxCidade1.SelectedItem == null ? null : cbxCidade1.SelectedItem.ToString()),
+                   cidade2 = (cbxCidade2.SelectedItem == null ? null : cbxCidade2.SelectedItem.ToString());
+
+            if (cidade1 == null || cidade2 == null)
+            {
+                MessageBox.Show("Selecione duas cidades");
+                return;
+            }
+
+            ParametrosDeBusca p;
+            if (rbDist.Checked)
+                p = ParametrosDeBusca.Distancia;
+            else if (rbTempo.Checked)
+                p = ParametrosDeBusca.Tempo;
+            else
+                p = ParametrosDeBusca.Preco;
+
+            lbCaminho.Items.Clear();
+            lbCaminho.Items.AddRange(grafo.AcharCaminho(cidade1, cidade2, p).ToArray());
+        }
+
+        private void lbCaminho_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            maximizeCity = cidades[lbCaminho.SelectedItem.ToString()];
+            mapa.Invalidate();
         }
     }
 }

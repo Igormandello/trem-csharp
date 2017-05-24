@@ -9,8 +9,9 @@ namespace Trens
     class Caminho
     {
         private string cidade1, cidade2;
-        private int distancia;
-        private int velocidade;
+        private int distancia,
+                    velocidade,
+                    preco;
 
         private string[] cidades;
         public String[] Cidades
@@ -28,12 +29,18 @@ namespace Trens
             get { return distancia; }
         }
 
+        public int Preco
+        {
+            get { return preco; }
+        }
+
         public Caminho(string cidadeInicio, string cidadeDestino, int distancia, int velocidadeMedia)
         {
             this.cidade1 = cidadeInicio;
             this.cidade2 = cidadeDestino;
             this.distancia = distancia;
             this.velocidade = velocidadeMedia;
+            this.preco = (velocidadeMedia * distancia) / 100;
 
             cidades = new string[] { cidade1, cidade2 };
         }
