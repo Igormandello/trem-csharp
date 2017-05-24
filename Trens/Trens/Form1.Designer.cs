@@ -63,6 +63,7 @@
             this.rbDist = new System.Windows.Forms.RadioButton();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.dlgSave = new System.Windows.Forms.SaveFileDialog();
+            this.label4 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mapa)).BeginInit();
             this.pnlCaminhos.SuspendLayout();
@@ -76,7 +77,7 @@
             this.carregarCidadesMenu});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(913, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(923, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -205,7 +206,7 @@
             // cbxCidade2
             // 
             this.cbxCidade2.FormattingEnabled = true;
-            this.cbxCidade2.Location = new System.Drawing.Point(145, 62);
+            this.cbxCidade2.Location = new System.Drawing.Point(152, 62);
             this.cbxCidade2.Margin = new System.Windows.Forms.Padding(10, 65, 15, 3);
             this.cbxCidade2.Name = "cbxCidade2";
             this.cbxCidade2.Size = new System.Drawing.Size(120, 21);
@@ -223,7 +224,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(142, 46);
+            this.label2.Location = new System.Drawing.Point(149, 46);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(79, 13);
             this.label2.TabIndex = 5;
@@ -251,7 +252,7 @@
             // 
             // btnInserirCaminho
             // 
-            this.btnInserirCaminho.Location = new System.Drawing.Point(145, 117);
+            this.btnInserirCaminho.Location = new System.Drawing.Point(152, 117);
             this.btnInserirCaminho.Name = "btnInserirCaminho";
             this.btnInserirCaminho.Size = new System.Drawing.Size(120, 51);
             this.btnInserirCaminho.TabIndex = 8;
@@ -271,7 +272,7 @@
             // 
             // btnCarregarCaminhos
             // 
-            this.btnCarregarCaminhos.Location = new System.Drawing.Point(145, 174);
+            this.btnCarregarCaminhos.Location = new System.Drawing.Point(152, 174);
             this.btnCarregarCaminhos.Name = "btnCarregarCaminhos";
             this.btnCarregarCaminhos.Size = new System.Drawing.Size(120, 33);
             this.btnCarregarCaminhos.TabIndex = 10;
@@ -282,6 +283,7 @@
             // pnlCaminhos
             // 
             this.pnlCaminhos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlCaminhos.Controls.Add(this.label4);
             this.pnlCaminhos.Controls.Add(this.btnCancelar);
             this.pnlCaminhos.Controls.Add(this.lbCaminho);
             this.pnlCaminhos.Controls.Add(this.groupBox1);
@@ -297,7 +299,7 @@
             this.pnlCaminhos.Controls.Add(this.cbxCidade2);
             this.pnlCaminhos.Location = new System.Drawing.Point(624, 27);
             this.pnlCaminhos.Name = "pnlCaminhos";
-            this.pnlCaminhos.Size = new System.Drawing.Size(277, 486);
+            this.pnlCaminhos.Size = new System.Drawing.Size(287, 486);
             this.pnlCaminhos.TabIndex = 11;
             this.pnlCaminhos.Visible = false;
             // 
@@ -313,10 +315,12 @@
             // 
             // lbCaminho
             // 
+            this.lbCaminho.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lbCaminho.FormattingEnabled = true;
-            this.lbCaminho.Location = new System.Drawing.Point(145, 252);
+            this.lbCaminho.IntegralHeight = false;
+            this.lbCaminho.Location = new System.Drawing.Point(152, 271);
             this.lbCaminho.Name = "lbCaminho";
-            this.lbCaminho.Size = new System.Drawing.Size(120, 225);
+            this.lbCaminho.Size = new System.Drawing.Size(120, 206);
             this.lbCaminho.TabIndex = 12;
             this.lbCaminho.SelectedIndexChanged += new System.EventHandler(this.lbCaminho_SelectedIndexChanged);
             // 
@@ -368,17 +372,26 @@
             // 
             this.btnBuscar.Location = new System.Drawing.Point(12, 213);
             this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(253, 33);
+            this.btnBuscar.Size = new System.Drawing.Size(260, 33);
             this.btnBuscar.TabIndex = 11;
             this.btnBuscar.Text = "Buscar Caminho";
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.buscarCaminho);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(138, 252);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(151, 13);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Caminho (Clique para localizar)";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(913, 525);
+            this.ClientSize = new System.Drawing.Size(923, 525);
             this.Controls.Add(this.mapa);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.pnlCaminhos);
@@ -434,6 +447,7 @@
         private System.Windows.Forms.RadioButton rbCusto;
         private System.Windows.Forms.RadioButton rbTempo;
         private System.Windows.Forms.RadioButton rbDist;
+        private System.Windows.Forms.Label label4;
     }
 }
 

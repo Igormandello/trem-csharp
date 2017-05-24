@@ -91,7 +91,7 @@ namespace Trens
                         cidade.Push(objetivo);
                         cidade.Push(atual);
 
-                        return cidade;
+                        distanciasFilhos.Add(cidade);
                     }
                         
                     //Se ainda não é o objetivo, pergunta para essa cidade vizinha o melhor caminho até o destino

@@ -266,7 +266,7 @@ namespace Trens
                     throw new Exception();
                 int distancia = Math.Abs(Convert.ToInt32(result));
 
-                caminhos.Add(new Caminho(cidade1, cidade2, velocidade, distancia));
+                caminhos.Add(new Caminho(cidade1, cidade2, distancia, velocidade));
 
                 grafo = new GrafoCaminhos(caminhos, cidades.Keys.ToList());
                 mapa.Invalidate();
@@ -395,6 +395,20 @@ namespace Trens
 
             mapa.Invalidate();
         }
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            caminhoBusca = null;
+            maximizeCity = PointF.Empty;
+            lbCaminho.Items.Clear();
+
+            mapa.Invalidate();
+        }
+
+        private void lbCaminho_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            maximizeCity = cidades[lbCaminho.SelectedItem.ToString()];
+            mapa.Invalidate();
+        }
         #endregion
 
         private void buscarCaminho(object sender, EventArgs e)
@@ -405,6 +419,12 @@ namespace Trens
             if (cidade1 == null || cidade2 == null)
             {
                 MessageBox.Show("Selecione duas cidades");
+                return;
+            }
+
+            if (cidade1 == cidade2)
+            {
+                MessageBox.Show("Selecione cidades diferentes");
                 return;
             }
 
@@ -427,20 +447,7 @@ namespace Trens
             caminhoBusca = caminhoInvertido;
             lbCaminho.Items.AddRange(caminhoInvertido.Reverse().ToArray());
 
-            mapa.Invalidate();
-        }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            caminhoBusca = null;
-            maximizeCity = PointF.Empty;
-            lbCaminho.Items.Clear();
-
-            mapa.Invalidate();
-        }
-
-        private void lbCaminho_SelectedIndexChanged(object sender, EventArgs e)
-        {
+            lbCaminho.SelectedIndex = 0;
             maximizeCity = cidades[lbCaminho.SelectedItem.ToString()];
             mapa.Invalidate();
         }
