@@ -15,6 +15,7 @@ namespace Trens
     {
         private Dictionary<string, PointF> cidades = new Dictionary<string, PointF>();
         private List<Caminho>             caminhos = new List<Caminho>();
+        private GrafoCaminhos grafo;
 
         private bool showMousePos  = false;
         private PointF localCidade = PointF.Empty;
@@ -58,6 +59,7 @@ namespace Trens
                         linha = sr.ReadLine();
                     }
 
+                    grafo = new GrafoCaminhos(caminhos, cidades.Keys.ToList());
                     mapa.Invalidate();
                 }
                 catch (Exception ex)
@@ -122,6 +124,7 @@ namespace Trens
                 cbxCidade1.Items.Add(cidade);
                 cbxCidade2.Items.Add(cidade);
 
+                grafo = new GrafoCaminhos(caminhos, cidades.Keys.ToList());
                 MessageBox.Show("Cidade incluida com sucesso!");
             }
         }
@@ -147,6 +150,7 @@ namespace Trens
                         if (c.Cidades[0] == nomeCidade || c.Cidades[1] == nomeCidade)
                             caminhos.Remove(c);
 
+                    grafo = new GrafoCaminhos(caminhos, cidades.Keys.ToList());
                     mapa.Invalidate();
                 }
         }
@@ -177,6 +181,10 @@ namespace Trens
 
                         linha = sr.ReadLine();
                     }
+
+                    grafo = new GrafoCaminhos(caminhos, cidades.Keys.ToList());
+
+                    grafo.AcharCaminho("Lorca", "Murcia", ParametrosDeBusca.Distancia);
 
                     mapa.Invalidate();
                 }
@@ -253,6 +261,8 @@ namespace Trens
                 int distancia = Math.Abs(Convert.ToInt32(result));
 
                 caminhos.Add(new Caminho(cidade1, cidade2, velocidade, distancia));
+
+                grafo = new GrafoCaminhos(caminhos, cidades.Keys.ToList());
                 mapa.Invalidate();
             }
             catch
@@ -279,6 +289,8 @@ namespace Trens
                     {
                         caminhos.Remove(c);
                         MessageBox.Show("Caminho removido!");
+
+                        grafo = new GrafoCaminhos(caminhos, cidades.Keys.ToList());
                         mapa.Invalidate();
 
                         return;

@@ -37,18 +37,5 @@ namespace Trens
 
             cidades = new string[] { cidade1, cidade2 };
         }
-
-        public static Stack<Caminho> AcharCaminho(Caminho inicio, Caminho destino, Caminho[] grafoCaminhos)
-        {
-            Stack<Caminho> percurso = new Stack<Caminho>();
-
-            MelhorCaminho(inicio, destino, grafoCaminhos, ref percurso);
-            return percurso;
-        }
-
-        private static void MelhorCaminho(Caminho inicio, Caminho destino, Caminho[] grafoCaminhos, ref Stack<Caminho> percurso)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
